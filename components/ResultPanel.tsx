@@ -1,11 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { HighlightedMessage, type Highlight, type HighlightTone } from "./HighlightedMessage";
 import { RiskGauge } from "./RiskGauge";
 import { useLang } from "./Providers";
 import { signalCopy } from "@/lib/signal-copy";
-import type { AnalysisResult, Severity } from "@/lib/detection/types";
+import type { AnalysisResult, RiskLevel, Severity } from "@/lib/detection/types";
 
 const TONE_BY_SEVERITY: Record<Severity, HighlightTone> = {
   critical: "danger",
@@ -29,6 +29,18 @@ const BADGE_BY_LEVEL = {
   high: "border-danger/30 bg-danger/10 text-danger",
 } as const;
 
+const BAR_BY_LEVEL: Record<RiskLevel, string> = {
+  low: "bg-gradient-to-r from-safe via-safe/50 to-transparent",
+  medium: "bg-gradient-to-r from-warn via-warn/50 to-transparent",
+  high: "bg-gradient-to-r from-danger via-danger/50 to-transparent",
+};
+
+const GLOW_BY_LEVEL: Record<RiskLevel, string> = {
+  low: "shadow-[0_0_80px_-34px_rgba(53,211,153,0.6)]",
+  medium: "shadow-[0_0_80px_-34px_rgba(255,176,32,0.6)]",
+  high: "shadow-[0_0_80px_-30px_rgba(255,93,108,0.65)]",
+};
+
 const URL_RISK_CLASS = {
   low: "border-safe/30 bg-safe/10 text-safe",
   medium: "border-warn/30 bg-warn/10 text-warn",
@@ -44,6 +56,7 @@ interface ResultPanelProps {
 export function ResultPanel({ text, result, onReset }: ResultPanelProps) {
   const { t, lang } = useLang();
   const [copied, setCopied] = useState(false);
+  const [barWidth, setBarWidth] = useState(0);
 
   const levelLabel =
     result.level === "high" ? t.riskHigh : result.level === "medium" ? t.riskMedium : t.riskLow;
@@ -53,6 +66,11 @@ export function ResultPanel({ text, result, onReset }: ResultPanelProps) {
       : result.level === "medium"
         ? t.riskMediumHint
         : t.riskLowHint;
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setBarWidth(Math.round(result.confidence * 100)));
+    return () => cancelAnimationFrame(frame);
+  }, [result.confidence]);
 
   const highlights = useMemo<Highlight[]>(() => {
     const items: Highlight[] = [];
@@ -96,10 +114,12 @@ export function ResultPanel({ text, result, onReset }: ResultPanelProps) {
   };
 
   return (
-    <div className="fade-up space-y-4">
-      <section className="panel p-5 sm:p-6">
+    <div className="space-y-4">
+      <section className={`panel relative overflow-hidden p-5 sm:p-6 ${GLOW_BY_LEVEL[result.level]}`}>
+        <div aria-hidden className={`absolute inset-x-0 top-0 h-[3px] ${BAR_BY_LEVEL[result.level]}`} />
+
         <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-8">
-          <div className="shrink-0 sm:w-[220px]">
+          <div className="shrink-0 sm:w-[230px]">
             <RiskGauge
               score={result.score}
               level={result.level}
@@ -123,6 +143,9 @@ export function ResultPanel({ text, result, onReset }: ResultPanelProps) {
               </span>
 
               <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-panel-2 px-2.5 py-1 text-[11px] font-medium text-mist">
+                <span
+                  className={`h-1.5 w-1.5 rounded-full ${result.aiUsed ? "bg-signal" : "bg-mist-2"}`}
+                />
                 {result.aiUsed ? t.aiOn : t.aiOff}
               </span>
 
@@ -137,10 +160,10 @@ export function ResultPanel({ text, result, onReset }: ResultPanelProps) {
 
             <div className="mt-4 flex items-center gap-2 text-[11px] text-mist-2">
               <span>{t.confidence}</span>
-              <span className="h-1 w-20 overflow-hidden rounded-full bg-line">
+              <span className="h-1 w-24 overflow-hidden rounded-full bg-line">
                 <span
-                  className="block h-full rounded-full bg-signal transition-[width] duration-700"
-                  style={{ width: `${Math.round(result.confidence * 100)}%` }}
+                  className="block h-full rounded-full bg-gradient-to-r from-signal/70 to-signal transition-[width] duration-1000 ease-out"
+                  style={{ width: `${barWidth}%` }}
                 />
               </span>
               <span className="font-mono text-chalk/70">{Math.round(result.confidence * 100)}%</span>
@@ -150,15 +173,13 @@ export function ResultPanel({ text, result, onReset }: ResultPanelProps) {
               <button
                 type="button"
                 onClick={copyReport}
-                className="rounded-lg border border-line bg-panel-2 px-3 py-1.5 text-[12px] font-medium text-chalk transition-colors hover:border-line-2 hover:bg-panel"
+                className={`btn btn-ghost px-3 py-1.5 ${copied ? "border-safe/40 text-safe" : ""}`}
               >
-                {copied ? t.copied : t.copy}
+                {copied ? <CheckIcon /> : <CopyIcon />}
+                <span className={copied ? "pop" : ""}>{copied ? t.copied : t.copy}</span>
               </button>
-              <button
-                type="button"
-                onClick={onReset}
-                className="rounded-lg border border-signal/30 bg-signal/10 px-3 py-1.5 text-[12px] font-semibold text-signal transition-colors hover:bg-signal/15"
-              >
+              <button type="button" onClick={onReset} className="btn btn-outline px-3 py-1.5">
+                <RefreshIcon />
                 {t.reset}
               </button>
             </div>
@@ -167,7 +188,7 @@ export function ResultPanel({ text, result, onReset }: ResultPanelProps) {
       </section>
 
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,380px)]">
-        <div className="space-y-4">
+        <div className="stagger-children space-y-4">
           <section className="panel p-5">
             <h2 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-mist-2">
               {t.inputLabel}
@@ -178,7 +199,7 @@ export function ResultPanel({ text, result, onReset }: ResultPanelProps) {
           <section className="panel p-5">
             <h2 className="mb-3 flex items-center justify-between gap-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-mist-2">
               <span>{t.linksTitle}</span>
-              <span className="font-mono text-[10px] normal-case tracking-normal text-mist-2/70">
+              <span className="rounded-full border border-line bg-panel-2 px-1.5 py-0.5 font-mono text-[10px] tracking-normal text-mist-2">
                 {result.urls.length}
               </span>
             </h2>
@@ -188,7 +209,10 @@ export function ResultPanel({ text, result, onReset }: ResultPanelProps) {
             ) : (
               <ul className="space-y-3">
                 {result.urls.map((url) => (
-                  <li key={`${url.start}-${url.raw}`} className="rounded-xl border border-line bg-abyss/60 p-3">
+                  <li
+                    key={`${url.start}-${url.raw}`}
+                    className="rounded-xl border border-line bg-abyss/60 p-3 transition-colors duration-200 hover:border-line-2 hover:bg-panel-2/60"
+                  >
                     <div className="flex flex-wrap items-start justify-between gap-2">
                       <code className="break-all font-mono text-[12px] text-chalk/90">{url.display}</code>
                       <span
@@ -227,7 +251,10 @@ export function ResultPanel({ text, result, onReset }: ResultPanelProps) {
                 {result.signals.map((signal) => {
                   const copy = signalCopy(signal.id, lang);
                   return (
-                    <li key={signal.id} className="flex gap-3 py-3 first:pt-0 last:pb-0">
+                    <li
+                      key={signal.id}
+                      className="-mx-2 flex gap-3 rounded-lg px-2 py-3 transition-colors duration-200 first:pt-2 last:pb-2 hover:bg-white/[0.025]"
+                    >
                       <span className={`mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full ${DOT_BY_SEVERITY[signal.severity]}`} />
                       <div className="min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
@@ -242,7 +269,7 @@ export function ResultPanel({ text, result, onReset }: ResultPanelProps) {
                             {signal.hits.slice(0, 3).map((hit) => (
                               <span
                                 key={hit}
-                                className="max-w-full truncate rounded border border-line bg-abyss px-1.5 py-0.5 font-mono text-[10px] text-mist-2"
+                                className="max-w-full truncate rounded border border-line bg-abyss px-1.5 py-0.5 font-mono text-[10px] text-mist-2 transition-colors hover:border-line-2 hover:text-mist"
                                 title={hit}
                               >
                                 {hit}
@@ -260,7 +287,10 @@ export function ResultPanel({ text, result, onReset }: ResultPanelProps) {
             {result.aiFlags.length > 0 && (
               <div className="mt-4 space-y-2 border-t border-line/70 pt-4">
                 {result.aiFlags.map((flag, index) => (
-                  <div key={`${flag.title}-${index}`} className="rounded-xl border border-line bg-abyss/60 p-3">
+                  <div
+                    key={`${flag.title}-${index}`}
+                    className="rounded-xl border border-line bg-abyss/60 p-3 transition-colors duration-200 hover:border-signal/25"
+                  >
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="rounded border border-signal/30 bg-signal/10 px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wide text-signal">
                         AI
@@ -280,15 +310,15 @@ export function ResultPanel({ text, result, onReset }: ResultPanelProps) {
           </section>
         </div>
 
-        <div className="space-y-4">
+        <div className="stagger-children space-y-4">
           <section className="panel p-5">
             <h2 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-mist-2">
               {t.verifyTitle}
             </h2>
             <ol className="space-y-3">
               {result.verificationSteps.map((step, index) => (
-                <li key={step} className="flex gap-3">
-                  <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full border border-safe/30 bg-safe/10 font-mono text-[10px] text-safe">
+                <li key={step} className="group flex gap-3">
+                  <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full border border-safe/30 bg-safe/10 font-mono text-[10px] text-safe transition-all duration-200 group-hover:scale-110 group-hover:border-safe/60 group-hover:bg-safe/20">
                     {index + 1}
                   </span>
                   <p className="text-[12.5px] leading-5 text-chalk/85">{step}</p>
@@ -317,5 +347,33 @@ export function ResultPanel({ text, result, onReset }: ResultPanelProps) {
         </div>
       </div>
     </div>
+  );
+}
+
+function CopyIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="9" y="9" width="12" height="12" rx="2" />
+      <path d="M5 15V5a2 2 0 0 1 2-2h10" />
+    </svg>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="m5 13 4 4L19 7" />
+    </svg>
+  );
+}
+
+function RefreshIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M3 12a9 9 0 0 1 15.5-6.2L21 8" />
+      <path d="M21 3v5h-5" />
+      <path d="M21 12a9 9 0 0 1-15.5 6.2L3 16" />
+      <path d="M3 21v-5h5" />
+    </svg>
   );
 }

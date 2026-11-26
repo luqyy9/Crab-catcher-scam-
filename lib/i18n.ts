@@ -43,6 +43,7 @@ const en = {
   historyLoad: "Load",
   historyNote: "Stored in this browser only. Nothing is uploaded.",
   historyDelete: "Delete",
+  historyConfirm: "Sure?",
   riskLow: "Low risk",
   riskMedium: "Medium risk",
   riskHigh: "High risk",
@@ -94,6 +95,14 @@ const en = {
     "Your message is sent to this app's own API route for analysis and is not stored on the server. Scan history is kept in your browser's local storage and never uploaded. If an API key is configured, the text is forwarded to the model provider for that single request.",
   aboutDisclaimer:
     "Crab Catcher is an educational project. It does not replace advice from your bank or the authorities.",
+  aboutCta: "Try the analyzer",
+  backToTop: "Back to top",
+  chips: ["30+ impersonated brands", "URL forensics", "English + Bahasa Melayu", "Nothing stored on the server"],
+  features: [
+    { title: "Paste anything", body: "SMS, WhatsApp, email or a DM." },
+    { title: "30+ checks run", body: "Wording, links, brands and credential requests." },
+    { title: "Get the why", body: "A score, the evidence, and what to do next." },
+  ],
   langLabel: "Language",
 };
 
@@ -142,6 +151,7 @@ const ms: Dict = {
   historyLoad: "Muat",
   historyNote: "Disimpan dalam pelayar ini sahaja. Tiada apa dihantar ke pelayan.",
   historyDelete: "Padam",
+  historyConfirm: "Pasti?",
   riskLow: "Risiko rendah",
   riskMedium: "Risiko sederhana",
   riskHigh: "Risiko tinggi",
@@ -193,6 +203,14 @@ const ms: Dict = {
     "Mesej anda dihantar ke laluan API aplikasi ini untuk analisis dan tidak disimpan di pelayan. Sejarah imbasan disimpan dalam storan tempatan pelayar anda dan tidak dimuat naik. Jika kunci API dikonfigurasikan, teks dihantar kepada penyedia model untuk permintaan itu sahaja.",
   aboutDisclaimer:
     "Crab Catcher ialah projek pendidikan. Ia tidak menggantikan nasihat bank anda atau pihak berkuasa.",
+  aboutCta: "Cuba penganalisis",
+  backToTop: "Kembali ke atas",
+  chips: ["30+ jenama ditiru", "Forensik pautan", "Bahasa Inggeris + Melayu", "Tiada disimpan di pelayan"],
+  features: [
+    { title: "Tampal apa sahaja", body: "SMS, WhatsApp, e-mel atau DM." },
+    { title: "30+ semakan dijalankan", body: "Gaya bahasa, pautan, jenama dan permintaan kelayakan akaun." },
+    { title: "Ketahui sebabnya", body: "Skor, bukti, dan langkah seterusnya." },
+  ],
   langLabel: "Bahasa",
 };
 
