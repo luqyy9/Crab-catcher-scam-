@@ -104,13 +104,37 @@ export function ResultPanel({ text, result, onReset }: ResultPanelProps) {
       ...result.verificationSteps.map((step, index) => `${index + 1}. ${step}`),
     ];
 
+    const report = lines.join("\n");
+
+    const legacyCopy = () => {
+      const area = document.createElement("textarea");
+      area.value = report;
+      area.setAttribute("readonly", "");
+      area.style.position = "fixed";
+      area.style.top = "0";
+      area.style.opacity = "0";
+      document.body.appendChild(area);
+      area.select();
+      let ok = false;
+      try {
+        ok = document.execCommand("copy");
+      } catch {
+        ok = false;
+      }
+      document.body.removeChild(area);
+      return ok;
+    };
+
+    let ok = false;
     try {
-      await navigator.clipboard.writeText(lines.join("\n"));
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1800);
+      await navigator.clipboard.writeText(report);
+      ok = true;
     } catch {
-      setCopied(false);
+      ok = legacyCopy();
     }
+
+    setCopied(ok);
+    if (ok) window.setTimeout(() => setCopied(false), 1800);
   };
 
   return (
