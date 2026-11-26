@@ -10,6 +10,7 @@ const en = {
   heroSubtitle:
     "We check for urgency tricks, fake links, impersonation and credential requests, then show you exactly what tripped the alarm, in plain language.",
   inputLabel: "Suspicious message",
+  highlightTitle: "What tripped the alarm",
   placeholder: "Paste the SMS, WhatsApp text or email here...",
   analyze: "Analyze message",
   analyzing: "Checking...",
@@ -118,6 +119,7 @@ const ms: Dict = {
   heroSubtitle:
     "Kami menyemak taktik desakan, pautan palsu, penyamaran dan permintaan kelayakan akaun, kemudian menunjukkan dengan jelas apa yang mencetuskan amaran.",
   inputLabel: "Mesej mencurigakan",
+  highlightTitle: "Apa yang mencetuskan penggera",
   placeholder: "Tampal SMS, teks WhatsApp atau e-mel di sini...",
   analyze: "Analisis mesej",
   analyzing: "Menyemak...",

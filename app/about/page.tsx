@@ -12,10 +12,10 @@ export default function AboutPage() {
   return (
     <>
       <Header />
-      <main className="relative mx-auto w-full max-w-3xl overflow-x-clip px-4 pb-16 pt-10 sm:px-6 sm:pt-14">
-        <div className="aurora -right-16 -top-24 h-56 w-56 bg-signal/20" />
+      <main className="relative mx-auto w-full max-w-3xl px-4 pb-16 pt-10 sm:px-6 sm:pt-14">
+        <div className="aurora -top-24 right-0 h-56 w-56 bg-signal/20" />
         <div
-          className="aurora -left-20 top-40 h-52 w-52 bg-danger/10"
+          className="aurora left-0 top-40 h-52 w-52 bg-danger/10"
           style={{ animationDelay: "-9s" }}
         />
 

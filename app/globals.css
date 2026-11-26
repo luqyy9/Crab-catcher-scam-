@@ -29,6 +29,7 @@
     color: var(--color-chalk);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    overflow-x: clip;
   }
 
   ::selection {

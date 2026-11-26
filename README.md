@@ -97,6 +97,30 @@ Restart the dev server. The badge in the result panel switches from *Rules-only 
 | `npm test` | Run the detection test suite (Vitest) |
 | `npm run typecheck` | `tsc --noEmit` |
 
+On Windows you can also double-click **`start-app.cmd`**, which installs dependencies on first run, starts the server and opens the browser.
+
+### Demo links
+
+Any sample can be preloaded and analysed from the URL, which is handy for sharing a specific example:
+
+```
+/?sample=bank&run=1
+/?sample=parcel&run=1
+/?sample=job
+```
+
+Sample ids: `bank`, `parcel`, `job`, `tax`, `safe`.
+
+### Design notes
+
+- Every control has hover, press (`scale(0.96)`) and disabled states via the `.btn` utilities in `globals.css`.
+- The risk gauge counts up with `requestAnimationFrame`; the confidence bar animates in.
+- Cards and list rows lift or tint on hover; result sections stagger in.
+- Analysing shows a scan sweep overlay with a minimum 650 ms so the feedback is legible.
+- The whole UI respects `prefers-reduced-motion`.
+- Detected links are never rendered as anchors.
+
+
 ---
 
 ## Project structure
@@ -149,6 +173,25 @@ lib/
 - Scam phrasing outside English and Bahasa Melayu is only partially covered.
 
 Crab Catcher is an educational project, not a replacement for advice from your bank or the authorities.
+
+---
+
+## Troubleshooting
+
+**`Port 3000 is already in use`** — an earlier server is still running. Close that terminal, or use `npm run dev -- -p 3001`.
+
+**Build fails with `ENOENT` / `EINVAL` / `PageNotFoundError` inside `.next`** — a dev server is still running and rewriting the same folder. Stop every `next dev` process, delete `.next`, then rebuild:
+
+```powershell
+Get-CimInstance Win32_Process -Filter "Name='node.exe'" | Where-Object { $_.CommandLine -match 'next' }
+Stop-Process -Id <pid> -Force
+Remove-Item -Recurse -Force .next
+npm run build
+```
+
+**`npm.ps1 cannot be loaded because running scripts is disabled`** — run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once.
+
+**Changes to `.env.local` are ignored** — environment variables are read at startup; restart the server.
 
 ---
 

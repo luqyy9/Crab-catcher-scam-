@@ -191,7 +191,7 @@ export function ResultPanel({ text, result, onReset }: ResultPanelProps) {
         <div className="stagger-children space-y-4">
           <section className="panel p-5">
             <h2 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-mist-2">
-              {t.inputLabel}
+              {t.highlightTitle}
             </h2>
             <HighlightedMessage text={text} highlights={highlights} />
           </section>

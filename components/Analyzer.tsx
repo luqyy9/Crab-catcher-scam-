@@ -144,12 +144,12 @@ export function Analyzer() {
     <>
       <Header />
 
-      <main className="mx-auto w-full max-w-6xl overflow-x-clip px-4 pb-16 sm:px-6">
+      <main className="mx-auto w-full max-w-6xl px-4 pb-16 sm:px-6">
         {!result && (
           <section className="relative pb-9 pt-11 sm:pt-16">
-            <div className="aurora -left-20 -top-24 h-64 w-64 bg-signal/25" />
+            <div className="aurora -top-24 left-0 h-64 w-64 bg-signal/25" />
             <div
-              className="aurora -right-10 top-4 h-72 w-72 bg-danger/15"
+              className="aurora right-0 top-4 h-72 w-72 bg-danger/15"
               style={{ animationDelay: "-7s" }}
             />
 
