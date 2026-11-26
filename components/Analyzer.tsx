@@ -263,7 +263,7 @@ export function Analyzer() {
             <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
               <p className="text-[11px] leading-5 text-mist-2">{t.emptyHint}</p>
 
-              <div className="flex items-center gap-2">
+              <div className="flex w-full items-center gap-2 sm:w-auto">
                 {text.length > 0 && (
                   <button
                     type="button"
@@ -281,7 +281,7 @@ export function Analyzer() {
                   type="button"
                   onClick={() => void analyze()}
                   disabled={loading || tooLong}
-                  className="btn btn-primary btn-shine px-4 py-2.5"
+                  className="btn btn-primary btn-shine flex-1 px-4 py-2.5 sm:flex-none"
                 >
                   {loading ? (
                     <span className="h-3 w-3 animate-spin rounded-full border-[1.5px] border-void/30 border-t-void" />

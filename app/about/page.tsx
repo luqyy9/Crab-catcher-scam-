@@ -64,7 +64,7 @@ export default function AboutPage() {
           {t.aboutDisclaimer}
         </p>
 
-        <Link href="/" className="btn btn-primary btn-shine mt-8 px-4 py-2.5">
+        <Link href="/" className="btn btn-primary btn-shine mt-8 w-full px-4 py-2.5 sm:w-auto">
           {t.aboutCta}
           <span aria-hidden>→</span>
         </Link>
