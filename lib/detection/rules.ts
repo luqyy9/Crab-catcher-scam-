@@ -170,5 +170,22 @@ export function contextSignals({ canonical, brands, signals, hasLink }: ContextI
     });
   }
 
+  // A locally formatted bank account number next to a payment request is how
+  // most chat scams collect the money. Leading-zero strings are phone numbers,
+  // so they are excluded to avoid flagging ordinary contact details.
+  const paymentish = signals.some((signal) => signal.category === "payment");
+  const account = /\b[1-9]\d(?:[ -]?\d){8,15}\b/.exec(canonical);
+  if (paymentish && account) {
+    const start = account.index ?? 0;
+    out.push({
+      id: "payment.account_number",
+      category: "payment",
+      severity: "medium",
+      weight: 10,
+      hits: [squish(account[0])],
+      spans: [{ start, end: start + account[0].length }],
+    });
+  }
+
   return out;
 }

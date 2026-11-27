@@ -332,9 +332,270 @@ export const SIGNAL_COPY: Record<string, Entry> = {
       why: "Menyebut organisasi yang dipercayai ialah cara termurah meminjam kredibilitinya. Percaya pada domain, bukan logo dalam teks.",
     },
   },
+  "payment.transfer_request": {
+    en: {
+      title: "Asks you to transfer money",
+      why: "A request to transfer, bank in or top up money is the core of most chat scams. Once you send it, the money is gone and the sender usually disappears.",
+    },
+    ms: {
+      title: "Meminta anda memindahkan wang",
+      why: "Permintaan untuk transfer, bank in atau top up ialah teras kebanyakan penipuan chat. Selepas dihantar, wang itu hilang dan pengirim biasanya terus lenyap.",
+    },
+  },
+  "payment.account_number": {
+    en: {
+      title: "Bank account number in a payment request",
+      why: "A local account number paired with a payment request is how the money is collected. Verify the recipient through a channel you trust, never from the message alone.",
+    },
+    ms: {
+      title: "Nombor akaun bank dalam permintaan bayaran",
+      why: "Nombor akaun tempatan bersama permintaan bayaran ialah cara wang dikutip. Sahkan penerima melalui saluran yang anda percaya, bukan hanya daripada mesej.",
+    },
+  },
+  "credential.otp_share": {
+    en: {
+      title: "Asks for your OTP or verification code",
+      why: "An OTP is the key that authorises a transaction. No bank, e-wallet or courier will ever ask you to forward it. Sharing it hands your account to the scammer.",
+    },
+    ms: {
+      title: "Meminta OTP atau kod pengesahan anda",
+      why: "OTP ialah kunci yang membenarkan transaksi. Tiada bank, e-dompet atau kurier akan meminta anda memajukannya. Berkongsi kod bermakna menyerahkan akaun anda kepada penipu.",
+    },
+  },
+  "credential.login_request": {
+    en: {
+      title: "Pushes you to log in to an account",
+      why: "Unexpected login prompts are usually a copy of a real bank page. Open the official app yourself instead of following the message.",
+    },
+    ms: {
+      title: "Mendesak anda log masuk ke akaun",
+      why: "Gesaan log masuk yang tidak dijangka biasanya salinan halaman bank sebenar. Buka aplikasi rasmi sendiri dan jangan ikut pautan dalam mesej.",
+    },
+  },
+  "too_good.investment": {
+    en: {
+      title: "Promises guaranteed investment profit",
+      why: "Guaranteed or percentage-per-week returns do not exist in real investing. These offers fund a Ponzi scheme where early payouts come from later victims.",
+    },
+    ms: {
+      title: "Menjanjikan keuntungan pelaburan yang dijamin",
+      why: "Pulangan yang dijamin atau peratus setiap minggu tidak wujud dalam pelaburan sebenar. Tawaran ini menyara skim Ponzi yang membayar mangsa awal dengan wang mangsa kemudian.",
+    },
+  },
+  "too_good.task_job": {
+    en: {
+      title: "Paid-task or commission job offer",
+      why: "Jobs that pay you to like, review or complete orders are bait. The 'top up to unlock your earnings' step is where the victim's money is taken.",
+    },
+    ms: {
+      title: "Tawaran kerja tugasan atau komisen",
+      why: "Kerja yang membayar anda untuk like, review atau melengkapkan pesanan ialah umpan. Langkah 'top up untuk keluarkan pendapatan' ialah tempat wang mangsa diambil.",
+    },
+  },
+  "too_good.loan": {
+    en: {
+      title: "Instant loan offer",
+      why: "Loans advertised as fast, guaranteed or without documents are usually advance-fee scams that ask for a deposit before any money is lent.",
+    },
+    ms: {
+      title: "Tawaran pinjaman segera",
+      why: "Pinjaman yang diiklankan sebagai segera, dijamin atau tanpa dokumen biasanya penipuan yuran pendahuluan yang meminta deposit sebelum wang dipinjamkan.",
+    },
+  },
+  "impersonation.claim": {
+    en: {
+      title: "Claims to be an official representative",
+      why: "Anyone can type 'this is the bank'. Real staff will not open a conversation on WhatsApp and ask for codes or transfers.",
+    },
+    ms: {
+      title: "Mendakwa sebagai wakil rasmi",
+      why: "Sesiapa sahaja boleh menaip 'ini pihak bank'. Kakitangan sebenar tidak akan membuka perbualan di WhatsApp dan meminta kod atau pemindahan wang.",
+    },
+  },
+  "link.qr_prompt": {
+    en: {
+      title: "Asks you to scan a QR code",
+      why: "A QR code can hide a payment request or a phishing address. Check the name shown by your banking app before confirming anything.",
+    },
+    ms: {
+      title: "Meminta anda mengimbas kod QR",
+      why: "Kod QR boleh menyembunyikan permintaan bayaran atau alamat pancingan data. Semak nama yang dipaparkan aplikasi bank anda sebelum mengesahkan apa-apa.",
+    },
+  },
+  "grammar.greeting": {
+    en: {
+      title: "Generic mass-message greeting",
+      why: "Real organisations address you by name. 'Dear customer' is used because the same text is sent to thousands of people.",
+    },
+    ms: {
+      title: "Sapaan generik untuk mesej pukal",
+      why: "Organisasi sebenar menyapa anda dengan nama. 'Pelanggan yang dihormati' digunakan kerana teks yang sama dihantar kepada ribuan orang.",
+    },
+  },
+  "chat.forwarded": {
+    en: {
+      title: "Forwarded message",
+      why: "Forwarded messages lose their original sender. Treat claims inside them as unverified, even when they come from a friend.",
+    },
+    ms: {
+      title: "Mesej yang dimajukan",
+      why: "Mesej yang dimajukan kehilangan pengirim asalnya. Anggap dakwaan di dalamnya belum disahkan, walaupun ia datang daripada rakan.",
+    },
+  },
+  "scenario.money_mule": {
+    en: {
+      title: "Money-mule account request",
+      why: "Letting someone move stolen money through your bank account is a crime in Malaysia, even if you were tricked. Never lend your account or receive money for a stranger.",
+    },
+    ms: {
+      title: "Permintaan akaun keldai",
+      why: "Membenarkan orang lain memindahkan wang curi melalui akaun bank anda ialah jenayah di Malaysia, walaupun anda ditipu. Jangan pinjamkan akaun atau terima wang untuk orang asing.",
+    },
+  },
+  "scenario.safe_account": {
+    en: {
+      title: "Fake 'safe account' / police impersonation",
+      why: "No police officer or Bank Negara official will ask you to move your money to a 'safe account' to protect it. This script is used to drain savings.",
+    },
+    ms: {
+      title: "Penyamaran polis / 'akaun selamat' palsu",
+      why: "Tiada pegawai polis atau Bank Negara akan meminta anda memindahkan wang ke 'akaun selamat' untuk melindunginya. Skrip ini digunakan untuk menguras simpanan.",
+    },
+  },
+  "scenario.overpayment": {
+    en: {
+      title: "'I sent you too much by mistake' refund scam",
+      why: "The original transfer is often reversed or never existed. Returning the 'extra' money leaves you out of pocket when the bank reverses the credit.",
+    },
+    ms: {
+      title: "Penipuan bayaran balik 'terlebih hantar'",
+      why: "Pemindahan asal sering dibatalkan atau tidak pernah wujud. Memulangkan wang 'terlebih' menyebabkan anda kerugian apabila bank membatalkan kredit itu.",
+    },
+  },
+  "scenario.sextortion": {
+    en: {
+      title: "Sextortion threat",
+      why: "Threatening to leak photos or videos to force a payment is blackmail. Paying does not stop it; report the account and keep the evidence.",
+    },
+    ms: {
+      title: "Ancaman pemerasan seksual",
+      why: "Mengancam untuk menyebarkan gambar atau video bagi memaksa bayaran ialah pemerasan. Membayar tidak menghentikannya; laporkan akaun itu dan simpan bukti.",
+    },
+  },
+  "scenario.otp_theft": {
+    en: {
+      title: "OTP / verification-code theft",
+      why: "The conversation is steering you into reading out a one-time code. That code approves a transfer or login, so the request is the theft itself.",
+    },
+    ms: {
+      title: "Kecurian OTP / kod pengesahan",
+      why: "Perbualan ini membawa anda supaya memberitahu kod sekali guna. Kod itu meluluskan pemindahan atau log masuk, jadi permintaan itu sendiri ialah kecurian.",
+    },
+  },
+  "scenario.investment": {
+    en: {
+      title: "Investment fraud pattern",
+      why: "A percentage return, a 'guaranteed profit' and a push to join a group form the standard investment-scam script. There is no real trading behind it.",
+    },
+    ms: {
+      title: "Corak penipuan pelaburan",
+      why: "Pulangan berperatus, 'untung dijamin' dan desakan menyertai kumpulan membentuk skrip penipuan pelaburan biasa. Tiada perdagangan sebenar di sebaliknya.",
+    },
+  },
+  "scenario.money_transfer": {
+    en: {
+      title: "Money-transfer request in a conversation",
+      why: "Someone is asking you to send money inside a chat. Verify the person and the account independently before any transfer.",
+    },
+    ms: {
+      title: "Permintaan pemindahan wang dalam perbualan",
+      why: "Seseorang meminta anda menghantar wang dalam chat. Sahkan orang dan akaun itu secara berasingan sebelum sebarang pemindahan.",
+    },
+  },
+  "scenario.job_task": {
+    en: {
+      title: "Paid-task job scam pattern",
+      why: "Small early payouts are used to earn trust, then you are asked to deposit more to 'unlock' bigger earnings. The deposits are never returned.",
+    },
+    ms: {
+      title: "Corak penipuan kerja tugasan",
+      why: "Bayaran kecil awal digunakan untuk membina kepercayaan, kemudian anda diminta mendeposit lebih untuk 'membuka' pendapatan lebih besar. Deposit itu tidak dipulangkan.",
+    },
+  },
+  "scenario.romance": {
+    en: {
+      title: "Romance or emotional manipulation",
+      why: "Affection is used to lower your guard before a request for money, a visa fee or an emergency payment. Real partners do not need your bank transfer.",
+    },
+    ms: {
+      title: "Penipuan cinta atau manipulasi emosi",
+      why: "Kasih sayang digunakan untuk melemahkan pertahanan anda sebelum meminta wang, yuran visa atau bayaran kecemasan. Pasangan sebenar tidak memerlukan pemindahan bank anda.",
+    },
+  },
+  "scenario.loan_fee": {
+    en: {
+      title: "Loan with an upfront fee",
+      why: "A lender that asks you to pay a deposit, processing fee or stamp duty before releasing the loan is collecting money, not lending it.",
+    },
+    ms: {
+      title: "Pinjaman dengan yuran pendahuluan",
+      why: "Pemberi pinjaman yang meminta deposit, yuran pemprosesan atau duti setem sebelum melepaskan pinjaman sedang mengutip wang, bukan meminjamkan.",
+    },
+  },
+  "scenario.parcel_fee": {
+    en: {
+      title: "Parcel or customs fee pattern",
+      why: "Couriers do not demand payment by chat to release a parcel. Check the tracking number on the courier's official site first.",
+    },
+    ms: {
+      title: "Corak yuran bungkusan atau kastam",
+      why: "Kurier tidak meminta bayaran melalui chat untuk melepaskan bungkusan. Semak nombor penjejakan di laman rasmi kurier dahulu.",
+    },
+  },
+  "scenario.account_takeover": {
+    en: {
+      title: "Account-takeover story",
+      why: "A 'new number' or 'my account was hacked' story is used to impersonate someone you trust and ask for money. Call the person on their old number.",
+    },
+    ms: {
+      title: "Cerita akaun diambil alih",
+      why: "Cerita 'nombor baru' atau 'akaun saya digodam' digunakan untuk menyamar sebagai orang yang anda percaya dan meminta wang. Hubungi orang itu di nombor lamanya.",
+    },
+  },
+  "scenario.tech_support": {
+    en: {
+      title: "Fake tech-support pattern",
+      why: "Warnings that your device is infected are used to get remote access or payment. Real vendors do not call or message you about a virus.",
+    },
+    ms: {
+      title: "Corak sokongan teknikal palsu",
+      why: "Amaran bahawa peranti anda dijangkiti digunakan untuk mendapatkan akses jauh atau bayaran. Vendor sebenar tidak menghubungi anda tentang virus.",
+    },
+  },
+  "scenario.crypto_wallet": {
+    en: {
+      title: "Crypto wallet address",
+      why: "Crypto transfers cannot be reversed. A wallet address in a message is a one-way payment to an anonymous recipient.",
+    },
+    ms: {
+      title: "Alamat dompet kripto",
+      why: "Pemindahan kripto tidak boleh dibatalkan. Alamat dompet dalam mesej ialah bayaran sehala kepada penerima tanpa nama.",
+    },
+  },
+  "scenario.advance_fee": {
+    en: {
+      title: "Advance-fee request",
+      why: "Paying a fee to release a larger sum is the oldest scam pattern there is. The larger sum never arrives.",
+    },
+    ms: {
+      title: "Permintaan yuran pendahuluan",
+      why: "Membayar yuran untuk melepaskan jumlah yang lebih besar ialah corak penipuan paling lama. Jumlah besar itu tidak pernah tiba.",
+    },
+  },
 };
 
 export const CATEGORY_COPY: Record<string, Record<Lang, string>> = {
+  scenario: { en: "Scam pattern", ms: "Corak penipuan" },
   link: { en: "Links", ms: "Pautan" },
   impersonation: { en: "Impersonation", ms: "Penyamaran" },
   credential: { en: "Credentials", ms: "Kelayakan akaun" },

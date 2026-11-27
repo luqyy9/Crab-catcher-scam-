@@ -51,9 +51,13 @@ interface ResultPanelProps {
   text: string;
   result: AnalysisResult;
   onReset: () => void;
+  /** Why the AI review did not run, when it did not. */
+  aiNote?: string | null;
+  /** Which provider produced the AI review, if any. */
+  aiProvider?: string | null;
 }
 
-export function ResultPanel({ text, result, onReset }: ResultPanelProps) {
+export function ResultPanel({ text, result, onReset, aiNote, aiProvider }: ResultPanelProps) {
   const { t, lang } = useLang();
   const [copied, setCopied] = useState(false);
   const [barWidth, setBarWidth] = useState(0);
@@ -89,6 +93,15 @@ export function ResultPanel({ text, result, onReset }: ResultPanelProps) {
       `Crab Catcher — ${levelLabel} (${result.score}/100)`,
       "",
       result.summary,
+      ...(result.scenarios.length > 0
+        ? [
+            "",
+            `${t.scamTypeLabel}: ${result.scenarios
+              .slice(0, 3)
+              .map((scenario) => signalCopy(scenario.id, lang).title)
+              .join(", ")}`,
+          ]
+        : []),
       "",
       `${t.signalsTitle}:`,
       ...result.signals.map((signal) => {
@@ -170,7 +183,7 @@ export function ResultPanel({ text, result, onReset }: ResultPanelProps) {
                 <span
                   className={`h-1.5 w-1.5 rounded-full ${result.aiUsed ? "bg-signal" : "bg-mist-2"}`}
                 />
-                {result.aiUsed ? t.aiOn : t.aiOff}
+                {result.aiUsed ? (aiProvider ? `AI: ${aiProvider}` : t.aiOn) : t.aiOff}
               </span>
 
               <span className="rounded-full border border-line bg-panel-2 px-2.5 py-1 font-mono text-[10px] text-mist-2">
@@ -181,6 +194,26 @@ export function ResultPanel({ text, result, onReset }: ResultPanelProps) {
             </div>
 
             <p className="mt-3 text-[14px] leading-6 text-chalk/85">{result.summary}</p>
+
+            {result.scenarios.length > 0 && (
+              <div className="mt-3 flex flex-wrap items-center gap-1.5">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-mist-2">
+                  {t.scamTypeLabel}
+                </span>
+                {result.scenarios.slice(0, 3).map((scenario) => (
+                  <span
+                    key={scenario.id}
+                    className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10.5px] font-medium ${
+                      scenario.severity === "critical" || scenario.severity === "high"
+                        ? "border-danger/30 bg-danger/10 text-danger"
+                        : "border-warn/30 bg-warn/10 text-warn"
+                    }`}
+                  >
+                    {signalCopy(scenario.id, lang).title}
+                  </span>
+                ))}
+              </div>
+            )}
 
             <div className="mt-4 flex items-center gap-2 text-[11px] text-mist-2">
               <span>{t.confidence}</span>
@@ -366,7 +399,7 @@ export function ResultPanel({ text, result, onReset }: ResultPanelProps) {
           </section>
 
           {!result.aiUsed && (
-            <p className="px-1 text-[11px] leading-5 text-mist-2">{t.aiOffHint}</p>
+            <p className="px-1 text-[11px] leading-5 text-mist-2">{aiNote ?? t.aiOffHint}</p>
           )}
         </div>
       </div>

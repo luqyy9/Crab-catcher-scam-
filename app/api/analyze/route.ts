@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { analyzeWithAI, applyAI } from "@/lib/ai/analyze";
+import { analyzeWithAI, applyAI, resolveProvider } from "@/lib/ai/analyze";
+import { describeChat } from "@/lib/detection/chat";
 import { analyzeText } from "@/lib/detection/analyze";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const bodySchema = z.object({
-  text: z.string().trim().min(5).max(5000),
+  text: z.string().trim().min(5).max(12000),
   lang: z.enum(["en", "ms"]).default("en"),
 });
 
@@ -61,20 +62,30 @@ export async function POST(request: Request) {
 
   const { text, lang } = parsed.data;
   const base = analyzeText(text, lang);
+  const provider = resolveProvider();
 
   let result = base;
-  let meta: { ai: boolean; reason?: string } = {
+  let meta: { ai: boolean; reason?: string; provider?: string } = {
     ai: false,
-    reason: process.env.OPENAI_API_KEY ? undefined : "no-key",
+    reason: provider ? undefined : "no-key",
+    provider: provider?.label,
   };
 
-  if (process.env.OPENAI_API_KEY) {
-    const ai = await analyzeWithAI(text, lang, base.signals, base.urls, base.ruleScore);
+  if (provider) {
+    const ai = await analyzeWithAI(
+      text,
+      lang,
+      base.signals,
+      base.urls,
+      base.ruleScore,
+      base.scenarios,
+      describeChat(text),
+    );
     if (ai.ok) {
       result = applyAI(base, ai.analysis);
-      meta = { ai: true };
+      meta = { ai: true, provider: provider.label };
     } else {
-      meta = { ai: false, reason: ai.reason };
+      meta = { ai: false, reason: ai.reason, provider: provider.label };
     }
   }
 

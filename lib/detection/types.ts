@@ -5,6 +5,7 @@ export type RiskLevel = "low" | "medium" | "high";
 export type Severity = "info" | "low" | "medium" | "high" | "critical";
 
 export type SignalCategory =
+  | "scenario"
   | "urgency"
   | "threat"
   | "credential"
@@ -56,6 +57,21 @@ export interface AIFlag {
   quote?: string;
 }
 
+/**
+ * A whole-conversation scam pattern (e.g. OTP theft, investment fraud) built
+ * from a combination of evidence rather than a single phrase. These are what
+ * let the offline engine recognise a scam chat even when no link is present.
+ */
+export interface ScenarioHit {
+  /** Stable id, also the i18n key for the title shown to the user. */
+  id: string;
+  severity: Severity;
+  weight: number;
+  confidence: "possible" | "likely";
+  evidence: string[];
+  spans: Span[];
+}
+
 export interface AIAnalysis {
   riskLevel: RiskLevel;
   confidence: number;
@@ -75,6 +91,8 @@ export interface AnalysisResult {
   level: RiskLevel;
   confidence: number;
   signals: Signal[];
+  /** Whole-message scam patterns detected by the offline engine. */
+  scenarios: ScenarioHit[];
   urls: UrlReport[];
   summary: string;
   verificationSteps: string[];
@@ -89,5 +107,6 @@ export interface AnalyzeResponse {
   meta: {
     ai: boolean;
     reason?: string;
+    provider?: string;
   };
 }

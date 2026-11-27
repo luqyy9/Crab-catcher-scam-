@@ -1,5 +1,6 @@
 import { buildIfScammed, buildSummary, buildVerificationSteps } from "./advice";
 import { findBrands } from "./brands";
+import { chatSignals, describeChat } from "./chat";
 import { CATEGORY_ORDER } from "./lexicons";
 import { prepare } from "./normalize";
 import {
@@ -9,6 +10,7 @@ import {
   punctuationSignal,
   runLexicons,
 } from "./rules";
+import { detectScenarios, scenarioSignals } from "./scenarios";
 import { scoreSignals } from "./score";
 import type { AnalysisResult, Lang, Signal } from "./types";
 import { analyzeLinks } from "./urls";
@@ -25,10 +27,16 @@ function sortSignals(signals: Signal[]): Signal[] {
 /**
  * Deterministic analysis. Runs in milliseconds and needs no network, so the
  * app is fully usable with no API key configured.
+ *
+ * The engine works in three passes: phrase lexicons, URL/brand forensics, then
+ * whole-message scenario detection (OTP theft, money requests, investment
+ * fraud, romance scams). The scenario pass is what lets a chat conversation be
+ * scored correctly even when it contains no link and no formal phrasing.
  */
 export function analyzeText(text: string, lang: Lang): AnalysisResult {
   const started = Date.now();
   const { original, canonical } = prepare(text);
+  const chat = describeChat(canonical);
   const brands = findBrands(canonical);
 
   const links = analyzeLinks(original, canonical, brands);
@@ -45,6 +53,10 @@ export function analyzeText(text: string, lang: Lang): AnalysisResult {
     }),
   ];
 
+  const scenarios = detectScenarios(canonical, signals, links.hasLink, chat);
+  signals.push(...scenarioSignals(scenarios));
+  signals.push(...chatSignals(chat));
+
   const homoglyph = homoglyphSignal(original, canonical);
   if (homoglyph) signals.push(homoglyph);
 
@@ -55,7 +67,11 @@ export function analyzeText(text: string, lang: Lang): AnalysisResult {
   if (punctuation) signals.push(punctuation);
 
   const sorted = sortSignals(signals);
-  const scored = scoreSignals(sorted, links.hasLink);
+  const scored = scoreSignals(sorted, {
+    hasLink: links.hasLink,
+    isChat: chat.isTranscript,
+    messageCount: chat.messageCount,
+  });
 
   return {
     lang,
@@ -65,10 +81,11 @@ export function analyzeText(text: string, lang: Lang): AnalysisResult {
     level: scored.level,
     confidence: scored.confidence,
     signals: sorted,
+    scenarios,
     urls: links.urls,
     summary: buildSummary(lang, scored.level, sorted, links.urls),
     verificationSteps: buildVerificationSteps(lang, sorted, links.urls),
-    ifScammed: buildIfScammed(lang),
+    ifScammed: buildIfScammed(lang, sorted),
     aiUsed: false,
     aiFlags: [],
     durationMs: Date.now() - started,

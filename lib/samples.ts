@@ -40,6 +40,32 @@ export const SAMPLES: Sample[] = [
     },
   },
   {
+    id: "chat",
+    label: { en: "Scam chat", ms: "Chat penipuan" },
+    text: {
+      en: [
+        "[27/11/2026, 10:31 PM] Sarah Lim (+60 11-2233 4455): Hi dear, I'm from Shopee customer service. Your parcel is stuck at customs and needs a clearance fee.",
+        "[27/11/2026, 10:32 PM] Sarah Lim: Please transfer RM85 to Maybank 512345678901 (Tan Mei Ling) and send me the receipt.",
+        "[27/11/2026, 10:34 PM] Sarah Lim: After that I will send the refund. Don't tell anyone about this yet, our system is under audit.",
+        "[27/11/2026, 10:35 PM] Sarah Lim: Also send me the 6-digit code you receive by SMS so I can verify your account.",
+      ].join("\n"),
+      ms: [
+        "[27/11/2026, 10:31 PTG] Sarah Lim (+60 11-2233 4455): Hai sayang, saya dari khidmat pelanggan Shopee. Bungkusan anda tersangkut di kastam dan perlu bayar yuran pelepasan.",
+        "[27/11/2026, 10:32 PTG] Sarah Lim: Sila pindahkan RM85 ke Maybank 512345678901 (Tan Mei Ling) dan hantar resit kepada saya.",
+        "[27/11/2026, 10:34 PTG] Sarah Lim: Selepas itu saya akan hantar bayaran balik. Jangan beritahu sesiapa lagi, sistem kami sedang diaudit.",
+        "[27/11/2026, 10:35 PTG] Sarah Lim: Hantar juga kod 6 digit yang anda terima melalui SMS supaya saya boleh sahkan akaun anda.",
+      ].join("\n"),
+    },
+  },
+  {
+    id: "invest",
+    label: { en: "Investment offer", ms: "Tawaran pelaburan" },
+    text: {
+      en: "Hi, I'm Aina from the VIP trading group. Our members make a guaranteed 18% profit every week with zero risk. Minimum capital is only RM500. Top up today and I will add you to our Telegram group where our mentor shares signals. Send to DuitNow 0123456789. Slots are limited.",
+      ms: "Hai, saya Aina dari kumpulan trading VIP. Ahli kami mendapat keuntungan 18% dijamin setiap minggu tanpa risiko. Modal minimum hanya RM500. Top up hari ini dan saya akan masukkan anda ke kumpulan Telegram kami. Hantar ke DuitNow 0123456789. Tempat terhad.",
+    },
+  },
+  {
     id: "safe",
     label: { en: "Normal message", ms: "Mesej biasa" },
     text: {

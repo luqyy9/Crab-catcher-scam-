@@ -17,13 +17,14 @@ import type { AnalyzeResponse } from "@/lib/detection/types";
 
 type ErrorCode = "short" | "long" | "rate" | "network" | "generic";
 
-const MAX_CHARS = 5000;
+const MAX_CHARS = 12000;
 const MIN_LOADING_MS = 650;
 
 export function Analyzer() {
   const { t, lang } = useLang();
   const [text, setText] = useState("");
   const [result, setResult] = useState<AnalyzeResponse["result"] | null>(null);
+  const [meta, setMeta] = useState<AnalyzeResponse["meta"] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ErrorCode | null>(null);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
@@ -83,6 +84,7 @@ export function Analyzer() {
       }
 
       setResult(data.result);
+      setMeta(data.meta);
       setHistory(
         addHistory({
           text: trimmed,
@@ -119,6 +121,7 @@ export function Analyzer() {
 
   const reset = useCallback(() => {
     setResult(null);
+    setMeta(null);
     setText("");
     setError(null);
     textareaRef.current?.focus();
@@ -139,6 +142,15 @@ export function Analyzer() {
 
   const tooLong = text.length > MAX_CHARS;
   const canAnalyze = text.trim().length >= 5 && !tooLong && !loading;
+
+  const aiNote =
+    !meta || meta.ai
+      ? null
+      : meta.reason === "no-key"
+        ? t.aiNoKey
+        : meta.reason === "timeout" || meta.reason === "network"
+          ? t.aiTimeout
+          : t.aiFailed;
 
   return (
     <>
@@ -340,7 +352,13 @@ export function Analyzer() {
 
         {result && (
           <div ref={resultRef} className="mt-4 scroll-mt-24">
-            <ResultPanel text={text} result={result} onReset={reset} />
+            <ResultPanel
+              text={text}
+              result={result}
+              onReset={reset}
+              aiNote={aiNote}
+              aiProvider={meta?.provider ?? null}
+            />
           </div>
         )}
 
