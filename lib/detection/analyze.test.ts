@@ -164,6 +164,26 @@ describe("chat and scenario detection", () => {
     expect(result.scenarios.map((scenario) => scenario.id)).toContain("scenario.money_mule");
   });
 
+  it("flags a Malaysian utility-bill notice with payment shorthand", () => {
+    const result = analyzeText(
+      "RM0  TM: YAP KAR LENG,ACC: 111720256,RM839.55,lawatan serah notis pd 30/11 3PM,disk60%,byr JomPAY-Kod:3608",
+      "en",
+    );
+    const scenarios = result.scenarios.map((scenario) => scenario.id);
+    expect(result.level).toBe("high");
+    expect(result.score).toBeGreaterThanOrEqual(72);
+    expect(scenarios).toContain("scenario.utility_bill");
+  });
+
+  it("keeps a legitimate utility bill reminder low risk", () => {
+    const result = analyzeText(
+      "TM: Bil anda RM120.50 untuk akaun 123456789 akan dijana pada 30/11. Bayar melalui aplikasi MyTM.",
+      "en",
+    );
+    expect(result.level).toBe("low");
+    expect(result.scenarios).toHaveLength(0);
+  });
+
   it("flags a police 'safe account' scam", () => {
     const result = analyzeText(
       "I am Officer Lim from PDRM. Your account is linked to money laundering. Transfer your money to a safe account for investigation.",

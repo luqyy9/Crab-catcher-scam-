@@ -107,6 +107,8 @@ export const LEXICONS: LexiconRule[] = [
       String.raw`\bpotong(?:kan)? bekalan\b`,
       String.raw`\bbekalan (?:elektrik|air)\b[^\n]{0,25}\b(?:dipotong|terputus)\b`,
       String.raw`\bnumber will be (?:terminated|suspended|blocked)\b`,
+      String.raw`\b(?:lawatan|serah(?:kan)?)\b[^\n]{0,20}\bnotis\b`,
+      String.raw`\bnotis\b[^\n]{0,15}\b(?:pemotongan|penggantungan|tuntutan|mahkamah)\b`,
     ],
   },
   {
@@ -293,6 +295,33 @@ export const LEXICONS: LexiconRule[] = [
       String.raw`\b(?:pinjam|borrow)\b[^\n]{0,30}\b(?:rm|myr|duit|wang|money)\b`,
       String.raw`\b(?:masukkan|pindahkan)\b[^\n]{0,30}\b(?:duit|wang|bayaran|rm)\b`,
       String.raw`\b(?:top[- ]?up|reload)\b[^\n]{0,30}\b(?:rm|myr|duit|wallet|dompet)\b`,
+      String.raw`\bjompay\b`,
+      String.raw`\b(?:byr|bayar)\b[^\n]{0,25}\b(?:kod|code)\b`,
+      String.raw`\b(?:kod|code)\s*(?:bayaran|payment|bill|bil)\b`,
+    ],
+  },
+  {
+    id: "payment.bill_notice",
+    category: "payment",
+    severity: "high",
+    weight: 13,
+    maxHits: 3,
+    patterns: [
+      String.raw`\b(?:lawatan|serah(?:kan)?)\b[^\n]{0,20}\bnotis\b`,
+      String.raw`\bnotis\b[^\n]{0,15}\b(?:pd|pada)\b`,
+      String.raw`\b(?:acc|akaun|account)\s*[:#.]?\s*\d{6,}\b`,
+      String.raw`\b(?:bil|bayaran|tunggakan)\b[^\n]{0,20}\brm\s?\d`,
+    ],
+  },
+  {
+    id: "too_good.discount",
+    category: "too_good",
+    severity: "medium",
+    weight: 11,
+    maxHits: 2,
+    patterns: [
+      String.raw`\b(?:disk(?:aun)?|discount|rebate|rebat|potongan)\s?\d{1,2}\s?%`,
+      String.raw`\b\d{1,2}\s?%\s?(?:discount|diskaun|off|rebate|rebat)\b`,
     ],
   },
   {

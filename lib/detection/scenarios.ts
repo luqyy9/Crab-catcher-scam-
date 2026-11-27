@@ -108,7 +108,7 @@ const SCENARIOS: ScenarioDef[] = [
     priority: 70,
     any: [
       /\b(?:transfer|bank[- ]?in|wire|pindah(?:kan)?|masukkan|hantar|send)\b[^\n]{0,50}(?:rm\s?\d|myr\s?\d|\bduit\b|\bwang\b|\bmoney\b|\bcash\b|\bbayaran\b|\bpayment\b|\b\d{2,6}\b)/i,
-      /\b(?:rm|myr)\s?\d[\d,]*(?:\.\d{2})?\b[^\n]{0,50}\b(?:transfer|bank[- ]?in|pindah|hantar|send|pay|bayar|masuk)\b/i,
+      /\b(?:pay|bayar|transfer|pindah|hantar|send)\b[^\n]{0,25}\b(?:rm|myr)\s?\d[\d,]*(?:\.\d{2})?\b[^\n]{0,35}\b(?:to|into|ke|kepada)\b[^\n]{0,25}\b(?:account|akaun|bank|duitnow|tng|ewallet|this|ini|saya|me)\b/i,
       /\b(?:pinjam|borrow|lend)\b[^\n]{0,30}\b(?:rm|myr|\d{2,6})\b/i,
       /\b(?:duitnow|maybank2u|cimb clicks|tng|touch n go|e-?wallet)\b[^\n]{0,45}\b(?:transfer|hantar|send|pindah|bayar|pay)\b/i,
     ],
@@ -180,6 +180,22 @@ const SCENARIOS: ScenarioDef[] = [
       /\b(?:deliver(?:y|ed)?|reschedule|address|alamat|not delivered|could not be delivered)\b/i,
     ],
     oneOf: [{ category: "payment" }, { link: true }],
+  },
+  {
+    id: "scenario.utility_bill",
+    severity: "high",
+    weight: 20,
+    priority: 62,
+    all: [
+      /\b(?:TM|TNB|Telekom|Tenaga Nasional|Unifi|Air Selangor|Syabas|Indah Water|Astro|Maxis|Celcom|Digi|U Mobile)\b/i,
+    ],
+    any: [
+      /\b(?:disk(?:aun)?|discount|rebate|rebat|potongan)\s?\d{1,2}\s?%/i,
+      /\bjompay\b/i,
+      /\b(?:lawatan|serah(?:kan)?)\b[^\n]{0,20}\bnotis\b/i,
+      /\b(?:byr|bayar)\b[^\n]{0,25}\b(?:kod|code)\b/i,
+    ],
+    oneOf: [{ category: "payment" }],
   },
   {
     id: "scenario.account_takeover",

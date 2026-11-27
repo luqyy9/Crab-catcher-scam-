@@ -32,6 +32,7 @@ const SCENARIO_FLOORS: Record<string, number> = {
   "scenario.romance": 70,
   "scenario.loan_fee": 68,
   "scenario.parcel_fee": 68,
+  "scenario.utility_bill": 72,
   "scenario.account_takeover": 68,
   "scenario.tech_support": 70,
   "scenario.overpayment": 68,

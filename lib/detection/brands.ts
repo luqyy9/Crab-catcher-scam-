@@ -112,7 +112,7 @@ export const BRANDS: Brand[] = [
   },
   {
     key: "unifi",
-    names: ["Unifi", "Telekom Malaysia"],
+    names: ["Unifi", "Telekom Malaysia", "TM", "TMpoint"],
     domains: ["unifi.com.my", "tm.com.my"],
     tokens: ["unifi", "telekom"],
   },

@@ -37,7 +37,7 @@ Deterministic, unit-tested, no network. Works with no API key.
 | **URL analysis** | raw IP hosts, `user@host` tricks, punycode, cheap TLDs, shorteners, lookalike domains (Levenshtein + leetspeak), brand mismatches, bait words, excessive subdomains, hyphens, odd ports, missing HTTPS |
 | **Brand impersonation** | 30+ banks, e-wallets, couriers and agencies commonly spoofed in Malaysia, each with an allowlist of official domains |
 | **Chat awareness** | exported WhatsApp/Telegram transcripts, timestamps, sender labels, forwarded messages and message counts |
-| **Scenarios** | OTP theft, money-mule accounts, money-transfer requests, investment fraud, paid-task job scams, romance scams, loan fees, parcel/customs fees, account takeover, fake tech support, crypto wallets, advance fees |
+| **Scenarios** | OTP theft, money-mule accounts, money-transfer requests, investment fraud, paid-task job scams, romance scams, loan fees, parcel/customs fees, utility-bill/disconnection notices, account takeover, fake tech support, crypto wallets, advance fees |
 | **Composite** | `urgency + link`, `credential request + link`, `brand claim + credential request`, `chat + money request`, `scenario + secrecy`, generic "your bank" wording |
 | **Text tricks** | Cyrillic/Greek homoglyphs, invisible characters, ALL CAPS, `!!!` |
 
@@ -59,7 +59,7 @@ Weights sum to a 0-100 score with combination bonuses. `0-29` low, `30-64` mediu
 
 - Risk rating with an animated gauge and confidence estimate
 - **Chat transcript support** — paste a whole WhatsApp/Telegram conversation, with timestamps and sender labels
-- **Scam-pattern detection** — OTP theft, money-mule accounts, money transfers, investment fraud, paid-task jobs, romance scams, loan/parcel fees and more, even with no link
+- **Scam-pattern detection** — OTP theft, money-mule accounts, money transfers, investment fraud, paid-task jobs, romance scams, loan/parcel fees, fake utility bills and more, even with no link
 - **In-place highlighting** of suspicious phrases and links, colour-coded by severity
 - Link breakdown: real host, risk level and the reasons it was flagged
 - Plain-language explanations for every red flag
@@ -174,7 +174,7 @@ lib/
     advice.ts              verification steps
     normalize.ts           homoglyph-safe preprocessing
     types.ts               shared types
-    analyze.test.ts        20 detection tests
+    analyze.test.ts        26 detection tests
   ai/analyze.ts            multi-provider AI call + Zod schema
   i18n.ts                  UI strings
   signal-copy.ts           per-flag explanations (EN/BM)

@@ -70,7 +70,7 @@ const en = {
   severity: { critical: "critical", high: "high", medium: "medium", low: "low", info: "info" },
   aboutTitle: "How Crab Catcher works",
   aboutIntro:
-    "Every message goes through an offline engine first: phrase rules, URL and brand forensics, then a scenario pass that recognises whole scam scripts such as OTP theft, money-transfer requests, fake jobs and investment fraud. If an AI key is configured, a language model reviews the same evidence and explains the verdict. Their scores are blended, and either one flagging high risk keeps the warning high.",
+    "Every message goes through an offline engine first: phrase rules, URL and brand forensics, then a scenario pass that recognises whole scam scripts such as OTP theft, money-transfer requests, fake jobs, fake utility bills and investment fraud. If an AI key is configured, a language model reviews the same evidence and explains the verdict. Their scores are blended, and either one flagging high risk keeps the warning high.",
   aboutSteps: [
     {
       title: "1. Normalise",
@@ -184,7 +184,7 @@ const ms: Dict = {
   severity: { critical: "kritikal", high: "tinggi", medium: "sederhana", low: "rendah", info: "info" },
   aboutTitle: "Cara Crab Catcher berfungsi",
   aboutIntro:
-    "Setiap mesej melalui enjin luar talian dahulu: peraturan frasa, forensik URL dan jenama, kemudian semakan senario yang mengenal pasti skrip penipuan penuh seperti kecurian OTP, permintaan pemindahan wang, kerja palsu dan penipuan pelaburan. Jika kunci AI dikonfigurasikan, model bahasa menyemak bukti yang sama dan menjelaskan keputusan. Skor kedua-duanya digabungkan, dan salah satu menandakan risiko tinggi sudah cukup untuk mengekalkan amaran itu.",
+    "Setiap mesej melalui enjin luar talian dahulu: peraturan frasa, forensik URL dan jenama, kemudian semakan senario yang mengenal pasti skrip penipuan penuh seperti kecurian OTP, permintaan pemindahan wang, kerja palsu, bil utiliti palsu dan penipuan pelaburan. Jika kunci AI dikonfigurasikan, model bahasa menyemak bukti yang sama dan menjelaskan keputusan. Skor kedua-duanya digabungkan, dan salah satu menandakan risiko tinggi sudah cukup untuk mengekalkan amaran itu.",
   aboutSteps: [
     {
       title: "1. Normalisasi",

@@ -52,6 +52,26 @@ export const SIGNAL_COPY: Record<string, Entry> = {
       why: "Bayaran untuk melepaskan bungkusan, menuntut hadiah atau membuka bayaran balik ialah penipuan yuran pendahuluan. Kad hadiah dan kripto diminta kerana transaksinya tidak boleh dibatalkan.",
     },
   },
+  "payment.bill_notice": {
+    en: {
+      title: "Utility or bill notice with payment shorthand",
+      why: "A disconnection notice sent by SMS with a one-off discount and a JomPAY code is a common utility-bill scam. Real providers do not offer 60% off to stop a visit. Check the account in the official app before paying.",
+    },
+    ms: {
+      title: "Notis bil atau utiliti dengan singkatan bayaran",
+      why: "Notis pemotongan melalui SMS dengan diskaun sekali sahaja dan kod JomPAY ialah penipuan bil utiliti yang biasa. Pembekal sebenar tidak menawarkan diskaun 60% untuk mengelakkan lawatan. Semak akaun dalam aplikasi rasmi sebelum membayar.",
+    },
+  },
+  "too_good.discount": {
+    en: {
+      title: "Large 'pay now' discount",
+      why: "A deep discount attached to a deadline is a lure. Utilities and banks do not offer 60% off to stop a disconnection or a late fee.",
+    },
+    ms: {
+      title: "Diskaun besar 'bayar sekarang'",
+      why: "Diskaun besar yang disertakan had masa ialah umpan. Utiliti dan bank tidak menawarkan diskaun 60% untuk mengelakkan pemotongan atau denda lewat.",
+    },
+  },
   "too_good.offer": {
     en: {
       title: "Too-good-to-be-true offer",
@@ -550,6 +570,16 @@ export const SIGNAL_COPY: Record<string, Entry> = {
     ms: {
       title: "Corak yuran bungkusan atau kastam",
       why: "Kurier tidak meminta bayaran melalui chat untuk melepaskan bungkusan. Semak nombor penjejakan di laman rasmi kurier dahulu.",
+    },
+  },
+  "scenario.utility_bill": {
+    en: {
+      title: "Fake utility bill or disconnection notice",
+      why: "This copies a TNB, TM or water-bill reminder but sends the payment to a JomPAY code the real company does not own. Pay only through the official app or portal, and never because a message offered a discount.",
+    },
+    ms: {
+      title: "Notis bil utiliti atau pemotongan palsu",
+      why: "Ini meniru peringatan bil TNB, TM atau air tetapi menghantar bayaran ke kod JomPAY yang bukan milik syarikat sebenar. Bayar hanya melalui aplikasi atau portal rasmi, dan jangan sekali-kali kerana mesej menawarkan diskaun.",
     },
   },
   "scenario.account_takeover": {
